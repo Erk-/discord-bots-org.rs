@@ -1,17 +1,38 @@
 language: rust
-rust:
-  - 1.31.0
-  - stable
-  - beta
-  - nightly
-
 sudo: false
-os:
-  - linux
-  - osx
+cache: cargo
 
-cache:
-  cargo: true
-
-script:
-- cargo test --all-features
+matrix:
+  include:
+    - rust: 1.31.0
+      os: linux
+      script:
+        - cargo test
+    - rust: 1.31.0
+      os: osx
+      script:
+        - cargo test
+    - rust: stable
+      os: linux
+      script:
+        - cargo test
+    - rust: stable
+      os: osx
+      script:
+        - cargo test
+    - rust: beta
+      os: linux
+      script:
+        - cargo test
+    - rust: beta
+      os: osx
+      script:
+        - cargo test
+    - rust: nightly
+      os: linux
+      script:
+        - cargo test --all-features
+    - rust: nightly
+      os: osx
+      script:
+        - cargo test --all-features
