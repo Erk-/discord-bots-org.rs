@@ -113,17 +113,20 @@ pub struct SearchResponse<T> {
 /// Information about one or more shards, used to update a bot's sharding
 /// stats.
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(untagged)]
 pub enum ShardStats {
     /// Used to post the cumulative guild information for all of the bot.
     Cumulative {
         /// The total number of shards in use.
         shard_count: Option<u64>,
         /// The total number of guilds across the entire bot.
-        total: u64,
+        #[serde(rename = "server_count")]
+        guild_count: u64,
     },
     /// Used to post the guild information for a single shard.
     Shard {
         /// The total number of guilds in the shard.
+        #[serde(rename = "server_count")]
         guild_count: u16,
         /// The total number of shards in use.
         shard_count: u64,
