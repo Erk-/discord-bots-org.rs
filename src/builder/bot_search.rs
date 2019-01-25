@@ -69,7 +69,7 @@ impl BotSearch {
             "-"
         };
 
-        self.0.insert("sort", format!("&sort={}{}", prefix, field));
+        self.0.insert("sort", format!("{}{}", prefix, field));
 
         self
     }
@@ -88,8 +88,11 @@ mod tests {
     #[test]
     fn test_field() {
         let mut search = BotSearch::new();
-        search.limit(10);
+        search.limit(10).offset(20).search("hi").sort("b", false);
 
-        assert!(search.0.contains_key(&"limit"));
+        assert_eq!(search.0.get(&"limit").unwrap(), "10");
+        assert_eq!(search.0.get(&"offset").unwrap(), "20");
+        assert_eq!(search.0.get(&"search").unwrap(), "hi");
+        assert_eq!(search.0.get(&"sort").unwrap(), "-b");
     }
 }

@@ -128,16 +128,16 @@ impl SmallWidget {
         self
     }
 
-    /// Sets the right color of the widget.
-    pub fn right_color(&mut self, value: impl Into<String>) -> &mut Self {
-        self.0.insert("rightcolor", value);
+    /// Sets the left text color of the widget.
+    pub fn left_text_color(&mut self, value: impl Into<String>) -> &mut Self {
+        self.0.insert("lefttextcolor", value);
 
         self
     }
 
-    /// Sets the left text color of the widget.
-    pub fn left_text_color(&mut self, value: impl Into<String>) -> &mut Self {
-        self.0.insert("lefttextcolor", value);
+    /// Sets the right color of the widget.
+    pub fn right_color(&mut self, value: impl Into<String>) -> &mut Self {
+        self.0.insert("rightcolor", value);
 
         self
     }
@@ -153,19 +153,50 @@ impl SmallWidget {
 #[cfg(test)]
 mod tests {
     use crate::Result;
-    use super::SmallWidget;
+    use super::{LargeWidget, SmallWidget};
 
+    // The ordering of `url`'s parsed query parameters isn't always
+    // reproducable.
     #[test]
-    fn test_color() -> Result<()> {
-        let mut widget = SmallWidget::new(270_198_738_570_444_801);
-        widget.left_color("FF0000").left_text_color("FFFFFF");
+    fn test_small_widget() -> Result<()> {
+        let mut widget = SmallWidget::new(1);
+        widget
+            .avatar_background("00FF00")
+            .left_color("FF0000")
+            .left_text_color("FFFFFF")
+            .right_color("0F0F0F")
+            .right_text_color("F0F0F0");
 
-        // The ordering of `url`'s parsed query parameters isn't always
-        // reproducable.
         let url = widget.build()?;
+        assert!(url.contains("avatarbg=00FF00"));
         assert!(url.contains("lefttextcolor=FFFFFF"));
         assert!(url.contains("leftcolor=FF0000"));
-        assert!(url.starts_with("https://discordbots.org/api/widget/270198738570444801.svg?"));
+        assert!(url.contains("rightcolor=0F0F0F"));
+        assert!(url.contains("righttextcolor=F0F0F0"));
+        assert!(url.starts_with("https://discordbots.org/api/widget/1.svg?"));
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_large_widget() -> Result<()> {
+        let mut widget = LargeWidget::new(1);
+        widget
+            .certified_color("FF0000")
+            .data_color("00FF00")
+            .label_color("0000FF")
+            .middle_color("FFF000")
+            .top_color("000FFF")
+            .username_color("AAAAAA");
+
+        let url = widget.build()?;
+        assert!(url.contains("certifiedcolor=FF0000"));
+        assert!(url.contains("datacolor=00FF00"));
+        assert!(url.contains("labelcolor=0000FF"));
+        assert!(url.contains("middlecolor=FFF000"));
+        assert!(url.contains("topcolor=000FFF"));
+        assert!(url.contains("usernamecolor=AAAAAA"));
+        assert!(url.starts_with("https://discordbots.org/api/widget/1.svg?"));
 
         Ok(())
     }
