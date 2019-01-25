@@ -2,12 +2,12 @@ use serde_json::Error as JsonError;
 use std::error::Error as StdError;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 use std::result::Result as StdResult;
+use url::ParseError as UrlParseError;
 
 #[cfg(feature = "reqwest")]
 use reqwest::{
     Error as ReqwestError,
     Response as ReqwestResponse,
-    UrlError as ReqwestUrlError,
     header::InvalidHeaderValue,
 };
 
@@ -21,6 +21,8 @@ pub type Result<T> = StdResult<T, Error>;
 /// errors.
 #[derive(Debug)]
 pub enum Error {
+    /// When a URL is invalid.
+    InvalidUrl(UrlParseError),
     /// An error from the `serde_json` crate.
     ///
     /// A potential reason for this is when there is an error deserializing a
@@ -38,9 +40,6 @@ pub enum Error {
     /// An error indicating an invalid request when using `reqwest`.
     #[cfg(feature = "reqwest")]
     ReqwestInvalid(Box<ReqwestResponse>),
-    /// An error indicating a parsing issue when using `reqwest`.
-    #[cfg(feature = "reqwest")]
-    ReqwestParse(ReqwestUrlError),
     /// An error indicating an unathorized request when using `reqwest`.
     #[cfg(feature = "reqwest")]
     ReqwestUnauthorized(Box<ReqwestResponse>),
@@ -60,16 +59,16 @@ impl From<JsonError> for Error {
 }
 
 #[cfg(feature = "reqwest")]
-impl From<ReqwestError> for Error {
-    fn from(err: ReqwestError) -> Self {
-        Error::Reqwest(err)
+impl From<UrlParseError> for Error {
+    fn from(err: UrlParseError) -> Self {
+        Error::InvalidUrl(err)
     }
 }
 
 #[cfg(feature = "reqwest")]
-impl From<ReqwestUrlError> for Error {
-    fn from(err: ReqwestUrlError) -> Self {
-        Error::ReqwestParse(err)
+impl From<ReqwestError> for Error {
+    fn from(err: ReqwestError) -> Self {
+        Error::Reqwest(err)
     }
 }
 
@@ -82,6 +81,7 @@ impl Display for Error {
 impl StdError for Error {
     fn description(&self) -> &str {
         match self {
+            Error::InvalidUrl(e) => e.description(),
             Error::Json(e) => e.description(),
             #[cfg(feature = "reqwest")]
             Error::Reqwest(e) => e.description(),
@@ -91,8 +91,6 @@ impl StdError for Error {
             Error::ReqwestHeaderValue(e) => e.description(),
             #[cfg(feature = "reqwest")]
             Error::ReqwestInvalid(_) => "Request invalid",
-            #[cfg(feature = "reqwest")]
-            Error::ReqwestParse(e) => e.description(),
             #[cfg(feature = "reqwest")]
             Error::ReqwestUnauthorized(_) => "Request auth bad",
         }
