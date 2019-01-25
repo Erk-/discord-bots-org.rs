@@ -20,12 +20,38 @@ pub struct BotSearch(HashMap<&'static str, String>);
 
 impl BotSearch {
     /// Creates a new builder for filtering bots in a search.
+    ///
+    /// # Examples
+    ///
+    /// Create a new builder for searching for bots:
+    ///
+    /// ```rust,no_run
+    /// use discord_bots_org::builder::BotSearch;
+    ///
+    /// let _search = BotSearch::new();
+    /// ```
     #[inline]
     pub fn new() -> Self {
         Self::default()
     }
 
     /// Builds into the URL query params.
+    ///
+    /// # Examples
+    ///
+    /// Search for 300 bots, limiting by 200, and then building into a set of
+    /// parameters to pass to an API client:
+    ///
+    /// ```rust
+    /// use discord_bots_org::builder::BotSearch;
+    ///
+    /// let mut search = BotSearch::new();
+    /// search.limit(300).offset(200);
+    ///
+    /// let params = search.build();
+    ///
+    /// assert_eq!(params.len(), 2);
+    /// ```
     pub fn build(self) -> Vec<(&'static str, String)> {
         self.0.into_iter().map(|(k, v)| (k, v)).collect()
     }
