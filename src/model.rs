@@ -192,3 +192,37 @@ pub struct User {
     /// The website moderator status of the user.
     pub web_mod: bool,
 }
+
+/// Information about an incoming webhook.
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Webhook {
+    /// ID of the bot that received a vote.
+    pub bot: String,
+    /// Whether the weekend multiple is in effect.
+    ///
+    /// This means user votes count as two.
+    pub is_weekend: bool,
+    /// The type of the vote.
+    #[serde(rename = "type")]
+    pub kind: WebhookType,
+    /// The query param string found on the vote page.
+    ///
+    /// # Examples
+    ///
+    /// `?a=1&b=2`
+    pub query: String,
+    /// The ID of the user who voted.
+    #[serde(rename = "user")]
+    pub user_id: String,
+}
+
+/// The type of webhook that was received.
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum WebhookType {
+    /// Indicator that this was a test webhook.
+    Test,
+    /// Indicator that this is a "normal" webhook, i.e. non-testing.
+    Upvote,
+}
