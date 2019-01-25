@@ -59,12 +59,12 @@ impl Client {
     }
 
     /// Retrieves information about a bot.
-    pub async fn get_dbl_bot(&self, user_id: u64) -> Result<Bot> {
+    pub async fn get_bot(&self, user_id: u64) -> Result<Bot> {
         await!(self.get(Url::parse(&endpoints::bot(user_id))?))
     }
 
     /// Retrieves a list of bots via a search.
-    pub async fn get_dbl_bots<'a>(
+    pub async fn get_bots<'a>(
         &'a self,
         params: Vec<(&'a str, String)>,
     ) -> Result<SearchResponse<Bot>> {
@@ -72,14 +72,14 @@ impl Client {
     }
 
     /// Retrieves information about a bot's specific stats.
-    pub async fn get_dbl_bot_stats(&self, user_id: u64) -> Result<BotStats> {
+    pub async fn get_bot_stats(&self, user_id: u64) -> Result<BotStats> {
         await!(self.get(Url::parse(&endpoints::bot_stats(user_id))?))
     }
 
     /// Retrieve whether a user has upvoted a bot in the last 24 hours.
     ///
     /// You can use this if your bot has over 1000 votes.
-    pub async fn get_dbl_bot_vote_check<'a>(
+    pub async fn get_bot_vote_check<'a>(
         &'a self,
         auth: impl AsRef<str> + 'a,
         bot_id: u64,
@@ -100,7 +100,7 @@ impl Client {
     ///
     /// **Note**: If your bot has over 1000 votes per month, then this can not
     /// be used. Webhooks must instead be used.
-    pub async fn get_dbl_bot_votes<'a>(
+    pub async fn get_bot_votes<'a>(
         &'a self,
         auth: impl AsRef<str> + 'a,
         bot_id: u64,
@@ -113,12 +113,12 @@ impl Client {
     }
 
     /// Retrieves information about a user.
-    pub async fn get_dbl_user(&self, user_id: u64) -> Result<User> {
+    pub async fn get_user(&self, user_id: u64) -> Result<User> {
         await!(self.get(Url::parse(&endpoints::user(user_id))?))
     }
 
     /// Posts a bot's shard stats.
-    pub async fn post_dbl_stats<'a>(
+    pub async fn post_stats<'a>(
         &'a self,
         auth: impl AsRef<str> + 'a,
         bot_id: u64,
