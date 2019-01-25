@@ -135,7 +135,7 @@ impl Client {
             .compat()
         )?;
 
-        await!(resp.json().compat()).map_err(From::from)
+        Ok(())
     }
 
     async fn get<'a, T: DeserializeOwned>(&'a self, url: Url) -> Result<T> {
