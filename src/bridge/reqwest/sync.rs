@@ -144,7 +144,8 @@ impl Client {
             .post(url)
             .json(stats)
             .header(AUTHORIZATION, HeaderValue::from_str(auth.as_ref())?)
-            .send()
-            .map_err(From::from)
+            .send()?;
+
+        Ok(())
     }
 }

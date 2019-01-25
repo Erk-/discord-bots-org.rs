@@ -126,14 +126,13 @@ impl Client {
     ) -> Result<()> {
         let url = Url::parse(&endpoints::bot_stats(bot_id))?;
         let (k, v) = (AUTHORIZATION, HeaderValue::from_str(auth.as_ref())?);
-        let mut resp = await!(self
+        await!(self
             .inner
             .post(url)
             .header(k, v)
             .json(stats)
             .send()
-            .compat()
-        )?;
+            .compat())?;
 
         Ok(())
     }
