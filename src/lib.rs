@@ -30,7 +30,7 @@
 //! features = ["reqwest-async-support", "reqwest-sync-support"]
 //! ```
 //!
-//! To enable `reqwest-async-support` `reqwest-sync-support`:
+//! To enable `reqwest-async-support` but not `reqwest-sync-support`:
 //!
 //! ```toml
 //! [dependencies.discord-bots-org]
