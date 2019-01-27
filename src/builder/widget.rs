@@ -4,6 +4,7 @@ use crate::{endpoints, Result};
 use std::collections::HashMap;
 use url::Url;
 
+#[derive(Clone, Debug)]
 struct Widget(u64, HashMap<&'static str, String>);
 
 impl Widget {
@@ -32,6 +33,7 @@ impl Widget {
 }
 
 /// Type-safe and guarenteed method of making a large widget.
+#[derive(Clone, Debug)]
 pub struct LargeWidget(Widget);
 
 impl LargeWidget {
@@ -95,6 +97,7 @@ impl LargeWidget {
 }
 
 /// Type-safe and guarenteed method of making a small widget.
+#[derive(Clone, Debug)]
 pub struct SmallWidget(Widget);
 
 impl SmallWidget {

@@ -16,6 +16,7 @@ use std::{
 /// search.offset(10).limit(20);
 /// let params = search.build();
 /// ```
+#[derive(Clone, Debug)]
 pub struct BotSearch(HashMap<&'static str, String>);
 
 impl BotSearch {

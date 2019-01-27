@@ -29,6 +29,7 @@ use std::sync::Arc;
 /// ```rust,no_run
 /// use discord_bots_org::bridge::reqwest::r#async::Client;
 /// ```
+#[derive(Clone, Debug)]
 pub struct Client {
     inner: Arc<ReqwestClient>,
 }
