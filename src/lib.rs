@@ -1,4 +1,4 @@
-//! [![travis-badge][]][travis] [![license-badge][]][license] [![docs-badge][]][docs]
+//! [![travis-badge][]][travis] [![license-badge][]][license] [![docs-badge][]][docs] [![rust badge]][rust link]
 //!
 //! An unofficial Rust library acting as a wrapper around the [Discord Bot List]
 //! API, offering implementations for both sync and async reqwest (v0.9).
