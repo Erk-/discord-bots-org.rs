@@ -79,15 +79,15 @@ For more examples, refer to the [examples] folder.
 
 ISC. View the full license [here][license].
 
-[LICENSE.md]: https://github.com/dabbotorg/discord-bots-org.rs/blob/master/LICENSE.md
+[LICENSE.md]: https://github.com/zeyla/discord-bots-org.rs/blob/master/LICENSE.md
 [Discord Bot List]: https://discordbots.org
 [crates.io]: https://crates.io/crates/discord-bots-org
 [docs]: https://docs.rs/discord-bots-org
 [docs-badge]: https://img.shields.io/badge/docs-online-2020ff.svg?style=flat-square
-[examples]: https://github.com/dabbotorg/discord-bots-org.rs/tree/master/examples
-[license]: https://github.com/dabbotorg/discord-bots-org.rs/blob/master/LICENSE.md
+[examples]: https://github.com/zeyla/discord-bots-org.rs/tree/master/examples
+[license]: https://github.com/zeyla/discord-bots-org.rs/blob/master/LICENSE.md
 [license-badge]: https://img.shields.io/badge/license-ISC-blue.svg?style=flat-square
 [rust badge]: https://img.shields.io/badge/rust-1.31.0+-93450a.svg?style=flat-square
 [rust link]: https://blog.rust-lang.org/2018/12/06/Rust-1.31-and-rust-2018.html
-[travis]: https://travis-ci.org/dabbotorg/discord-bots-org.rs
-[travis-badge]: https://img.shields.io/travis/dabbotorg/discord-bots-org.rs.svg?style=flat-square
+[travis]: https://travis-ci.org/zeyla/discord-bots-org.rs
+[travis-badge]: https://img.shields.io/travis/zeyla/discord-bots-org.rs.svg?style=flat-square

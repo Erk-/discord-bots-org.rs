@@ -6,7 +6,7 @@ edition = "2018"
 keywords = ["discord"]
 license = "ISC"
 name = "discord-bots-org"
-repository = "https://github.com/dabbotorg/discord-bots-org.rs"
+repository = "https://github.com/zeyla/discord-bots-org.rs"
 version = "0.1.0"
 
 [badges.maintenance]
