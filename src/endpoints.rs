@@ -35,6 +35,11 @@ pub fn widget(id: u64) -> String {
     format!("{}/widget/{}.svg", BASE, id)
 }
 
+pub fn png_widget(id: u64) -> String {
+    format!("{}/widget/{}.png", BASE, id)
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;

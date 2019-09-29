@@ -5,11 +5,16 @@ use std::collections::HashMap;
 use url::Url;
 
 #[derive(Clone, Debug)]
-struct Widget(u64, HashMap<&'static str, String>);
+struct Widget(u64, HashMap<&'static str, String>, bool);
 
 impl Widget {
     fn build(self) -> Result<String> {
-        let uri = endpoints::widget(self.0);
+        let uri = if self.2 {
+            endpoints::png_widget(self.0)
+        } else {
+            endpoints::widget(self.0)
+        };
+
         let params = self
             .1
             .into_iter()
@@ -39,7 +44,7 @@ pub struct LargeWidget(Widget);
 impl LargeWidget {
     /// Creates a new builder for making a large widget.
     pub fn new(bot_id: u64) -> Self {
-        LargeWidget(Widget(bot_id, HashMap::new()))
+        LargeWidget(Widget(bot_id, HashMap::new(), false))
     }
 
     /// Builds into a valid URL.
@@ -94,6 +99,13 @@ impl LargeWidget {
 
         self
     }
+
+    /// Sets if the widget should be a png instead of a svg.
+    pub fn png(&mut self, value: bool) -> &mut Self {
+        (self.0).2 = value;
+
+        self
+    }
 }
 
 /// Type-safe and guarenteed method of making a small widget.
@@ -103,7 +115,7 @@ pub struct SmallWidget(Widget);
 impl SmallWidget {
     /// Creates a new builder for making a small widget.
     pub fn new(bot_id: u64) -> Self {
-        SmallWidget(Widget(bot_id, HashMap::new()))
+        SmallWidget(Widget(bot_id, HashMap::new(), false))
     }
 
     /// Builds into a valid URL.
@@ -151,6 +163,13 @@ impl SmallWidget {
 
         self
     }
+
+    /// Sets if the widget should be a png instead of a svg.
+    pub fn png(&mut self, value: bool) -> &mut Self {
+        (self.0).2 = value;
+
+        self
+    }
 }
 
 #[cfg(test)]
@@ -168,7 +187,8 @@ mod tests {
             .left_color("FF0000")
             .left_text_color("FFFFFF")
             .right_color("0F0F0F")
-            .right_text_color("F0F0F0");
+            .right_text_color("F0F0F0")
+            .png(true);
 
         let url = widget.build()?;
         assert!(url.contains("avatarbg=00FF00"));
@@ -176,7 +196,7 @@ mod tests {
         assert!(url.contains("leftcolor=FF0000"));
         assert!(url.contains("rightcolor=0F0F0F"));
         assert!(url.contains("righttextcolor=F0F0F0"));
-        assert!(url.starts_with("https://discordbots.org/api/widget/1.svg?"));
+        assert!(url.starts_with("https://discordbots.org/api/widget/1.png?"));
 
         Ok(())
     }
